@@ -27,8 +27,12 @@ public class IndexService {
         List<Thought> result = new ArrayList<>();
         List<Thought> thoughts = indexRepository.findAll();
         for (Thought thought : thoughts) {
+            String s = thought.getText();
+            s = s.replaceAll("[^a-zA-Z0-9\\s]", "");
+            s = s.toLowerCase();
+            s = " " + s + " ";
             for (String key : keys) {
-                if (thought.getText().contains(key)) {
+                if (s.contains(key)) {
                     result.add(thought);
                     break;
                 }

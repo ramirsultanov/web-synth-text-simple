@@ -1,11 +1,12 @@
 <#import "/spring.ftl" as spring/>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Hello</title>
+    <title>Explore world</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="../static/css/index/index.css" th:href="@{/css/index/index.scss}" />
     <script>
         $("#searchText").keyup(function(event) {
             if (event.keyCode === 13) {
@@ -43,11 +44,12 @@
 </head>
 <body>
 <h1 id="welcome">Search thoughts</h1>
-<form id="searchForm" onsubmit="search(); return false;">
-    <label for="searchText">Search</label><input type="text" id="searchText" name="searchText" autofocus
-                                                 placeholder=
-                                                 "Write keywords (for example: truth space life), then press Enter">
-</form>
+<div id="searchContainer">
+    <form id="searchForm" onsubmit="search(); return false;">
+        <input type="search" id="searchText" name="searchText" autofocus placeholder=
+            "Write keywords (for example: truth space life), then press Enter">
+    </form>
+</div>
 <div id="result"></div>
 </body>
 </html>
