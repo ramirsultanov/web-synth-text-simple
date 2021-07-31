@@ -37,13 +37,13 @@
                     document.querySelector("#result").innerHTML += "<h2>" + data.text[i].text + "</h2>";
                 }
             } else {
-                document.querySelector("#result").innerHTML = "<h2>No matches</h2>";
+                document.querySelector("#result").innerHTML = "<h2>Life is not simple sometimes</h2>";
             }
         }
     </script>
 </head>
 <body>
-<h1 id="welcome">Search thoughts</h1>
+<h1 id="welcome"> </h1>
 <div id="searchContainer">
     <form id="searchForm" onsubmit="search(); return false;">
         <input type="search" id="searchText" name="searchText" autofocus placeholder=

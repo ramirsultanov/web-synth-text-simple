@@ -28,7 +28,7 @@ public class IndexController {
     @GetMapping("/search")
     public ResponseEntity<?> index(@RequestParam("query") String query) {
         Map<String, List<Thought>> map = new HashMap<>();
-        List<Thought> list = indexService.getThoughts(query);
+        final List<Thought> list = indexService.getOneThoughtAsList(query);
         map.put("text", list);
         return ResponseEntity.ok(map);
     }

@@ -7,14 +7,14 @@ BUCKET=$(curl -s "http://metadata.google.internal/computeMetadata/v1/instance/at
 echo "Project ID: ${PROJECTID} Bucket: ${BUCKET}"
 
 # Get the files we need
-gsutil cp gs://${BUCKET}/demo.jar .
+# gsutil cp gs://${BUCKET}/demo.jar .
 
 # Install dependencies
-apt-get update
-apt-get -y --force-yes install openjdk-11-jdk
+# apt-get update
+# apt-get -y --force-yes install openjdk-11-jdk
 
 # Make Java 8 default
-update-alternatives --set java /usr/lib/jvm/java-11-openjdk-amd64/jre/bin/java
+# update-alternatives --set java /usr/lib/jvm/java-11-openjdk-amd64/jre/bin/java
 
 # Start server
-java -jar web-synth-simple-text-0.0.1-SNAPSHOT.jar
+java -jar web-synth-simple-text-0.0.2.jar

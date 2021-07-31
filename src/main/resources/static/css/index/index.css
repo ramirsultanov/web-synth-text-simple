@@ -1,16 +1,17 @@
 html {
-    background-color:#333;
+    background-color:#2b303b;
 }
 
 #welcome {
     width: 100%;
     text-align: center;
-    color: #bbb;
+    color: #ccc;
 }
 
 #searchContainer {
     width: 80%;
     vertical-align: top;
+    margin-top: 5%;
     margin-left: 10%;
     white-space: nowrap;
 }
@@ -26,11 +27,11 @@ html {
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     border-radius: 6px;
-    -webkit-transition: background .55s ease;
-    -moz-transition: background .55s ease;
-    -ms-transition: background .55s ease;
-    -o-transition: background .55s ease;
-    transition: background .55s ease;
+    -webkit-transition: background .8s ease;
+    -moz-transition: background .8s ease;
+    -ms-transition: background .8s ease;
+    -o-transition: background .8s ease;
+    transition: background .8s ease;
 }
 
 #searchText::-webkit-input-placeholder {
@@ -51,13 +52,13 @@ html {
 
 #searchText:hover, #searchText:focus, #searchText:active {
     outline: none;
-    background: #fff;
+    background: #bbb;
 }
 
 #result {
-    margin-top: 10%;
-    width: 100%;
-    color: #bbb;
+    margin: 0 10% 0 10%;
+    width: 80%;
+    color: #ccc;
     display: flex;
     flex-direction: column;
     justify-content: center;
