@@ -1,4 +1,4 @@
-package searchiarium.ct.com.websynthsimpletext.models;
+package searchiarium.ct.com.websynthsimpletext.entities;
 
 import lombok.Builder;
 import lombok.Data;
