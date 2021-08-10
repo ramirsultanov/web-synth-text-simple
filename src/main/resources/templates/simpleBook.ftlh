@@ -12,7 +12,12 @@
 <body>
     <div>
         <div>
-
+            <#list texts as list>
+                <tr>
+                    <td>${list.text}</td>
+                    <td>${list.owner}</td>
+                </tr>
+            </#list>
         </div>
         <div>
 

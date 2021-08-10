@@ -6,5 +6,5 @@ import searchiarium.ct.com.websynthsimpletext.entities.SimpleText;
 
 @Repository
 public interface SimpleTextRepository extends JpaRepository<SimpleText, Long> {
-    SimpleText findBy(String text);
+//    SimpleText findBy(String text);
 }

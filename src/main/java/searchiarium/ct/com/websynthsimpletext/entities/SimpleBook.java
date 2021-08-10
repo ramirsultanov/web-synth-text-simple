@@ -20,4 +20,13 @@ public class SimpleBook {
     private Team creator;
     @OneToOne
     private Team owner;
+
+    public SimpleText getSimpleText(final User user) {
+        for (SimpleText text : texts) {
+            if (text.getOwner() == user) {
+                return text;
+            }
+        }
+        throw new RuntimeException("There is no user's text in book");
+    }
 }

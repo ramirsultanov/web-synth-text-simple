@@ -12,8 +12,9 @@ import java.time.OffsetDateTime;
  * SimpleText is a class mapping a text written by users in any book (page)
  */
 @Data
-@Builder
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "simpletext")
 public class SimpleText {
@@ -28,5 +29,7 @@ public class SimpleText {
     private OffsetDateTime createdDateTime;
     private OffsetDateTime lastEditedDateTime;
     @ManyToOne(fetch = FetchType.EAGER)
-    private SimpleBook books;
+    private SimpleBook book;
 }
+
+

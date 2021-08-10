@@ -40,7 +40,7 @@ public class SimpleBookController {
                 model.addAttribute("becauseOf", "user does not belong to the owner team");
                 return "denied";
             } else {
-                List<SimpleText> texts = bService.getSimpleTextsOrderByNumber(book);
+                List<SimpleText> texts = bService.getSimpleTextsOrderByNumberBeforeUserSimpleText(book, user);
                 model.addAttribute("book", book);
                 model.addAttribute("texts", texts);
             }
