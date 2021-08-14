@@ -14,7 +14,9 @@ public class Team {
     private Long id;
     @Column(unique = true)
     private String name;
-    @OneToMany(fetch =  FetchType.EAGER)
+    @OneToMany
     private List<User> users;
+    @OneToMany
+    private List<User> owners;
     private Long points;
 }

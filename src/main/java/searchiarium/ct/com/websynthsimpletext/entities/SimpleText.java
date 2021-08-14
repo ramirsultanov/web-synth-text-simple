@@ -23,7 +23,7 @@ public class SimpleText {
     private Long id;
     @Column(columnDefinition = "TEXT")
     private String text;
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne
     private User owner;
     private Integer number;
     private OffsetDateTime createdDateTime;

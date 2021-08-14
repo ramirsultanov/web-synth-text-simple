@@ -26,7 +26,7 @@ public class SimpleBookController {
     private UserService userService;
 
     @PreAuthorize("hasAuthority('ROLE_USER')") // CHECK ME
-    @GetMapping("/")
+    @GetMapping("/book")
     public String simpleBook(@RequestParam final String b, Model model) {
         if (b != null) {
             SimpleBook book = bService.getSimpleBook(b);
@@ -40,9 +40,13 @@ public class SimpleBookController {
                 model.addAttribute("becauseOf", "user does not belong to the owner team");
                 return "denied";
             } else {
-                List<SimpleText> texts = bService.getSimpleTextsOrderByNumberBeforeUserSimpleText(book, user);
+                List<SimpleText> textsBefore = bService.getSimpleTextsOrderByNumberBeforeUserSimpleText(book, user);
+                List<SimpleText> textsAfter = bService.getSimpleTextOrderByNumberAfterUserSimpleText(book, user);
+                SimpleText textEqual = bService.getSimpleText(book, user);
                 model.addAttribute("book", book);
-                model.addAttribute("texts", texts);
+                model.addAttribute("textsBefore", textsBefore);
+                model.addAttribute("textsAfter", textsAfter);
+                model.addAttribute("textEqual", textEqual);
             }
         } else {
             return "invalidSimpleBook";
