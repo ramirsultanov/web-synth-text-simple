@@ -1,6 +1,9 @@
 package searchiarium.ct.com.websynthsimpletext.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import searchiarium.ct.com.websynthsimpletext.entities.Role;
@@ -11,6 +14,9 @@ import java.util.Collection;
 import java.util.Set;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "user")
 public class User implements UserDetails {
@@ -49,4 +55,9 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public void addRole(final Role role) {
+        this.roles.add(role);
+    }
+
 }

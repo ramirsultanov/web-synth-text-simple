@@ -15,7 +15,7 @@
 <div>
     <input type="button" value="Add user" id="add-user-button" onclick="openCloseAddUser();">
     <div id="add-user" hidden="true">
-        <form action="/team-add-user" method="post">
+        <form action="/teamAddUser" method="post">
             <input type="text" placeholder="username" name="username" id="username">
             <input type="submit" value="Add user" id="add-user-submit">
         </form>

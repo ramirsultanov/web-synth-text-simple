@@ -25,7 +25,7 @@ public class SimpleBookController {
     @Autowired
     private UserService userService;
 
-    @PreAuthorize("hasAuthority('ROLE_USER')") // CHECK ME
+    @PreAuthorize("hasAuthority('USER')") // CHECK ME
     @GetMapping("/book")
     public String simpleBook(@RequestParam final String b, Model model) {
         if (b != null) {

@@ -11,7 +11,7 @@
 </head>
 <body>
 <div>
-    <form action="/register-team" method="post">
+    <form action="/regTeam" method="post">
         <input type="text" placeholder="name" name="name" id="name">
         <input type="submit" value="Register team" id="submit">
     </form>
