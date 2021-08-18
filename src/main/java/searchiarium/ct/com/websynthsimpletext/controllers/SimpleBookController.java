@@ -7,12 +7,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import searchiarium.ct.com.websynthsimpletext.entities.SimpleBook;
 import searchiarium.ct.com.websynthsimpletext.entities.SimpleText;
 import searchiarium.ct.com.websynthsimpletext.entities.User;
 import searchiarium.ct.com.websynthsimpletext.services.SimpleBookService;
 import searchiarium.ct.com.websynthsimpletext.services.UserService;
+import searchiarium.ct.com.websynthsimpletext.validators.SimpleBookNameValidator;
 
 import java.util.List;
 
@@ -25,11 +27,16 @@ public class SimpleBookController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private SimpleBookNameValidator simpleBookNameValidator;
+
     @PreAuthorize("hasAuthority('USER')") // CHECK ME
-    @GetMapping("/book")
-    public String simpleBook(@RequestParam final String b, Model model) {
-        if (b != null) {
-            SimpleBook book = bService.getSimpleBook(b);
+    @GetMapping("/book") // change b => &13
+    public String simpleBook(@RequestParam final String id, Model model) {
+        if (model.containsAttribute("error")) {
+            return "error";
+        } else if (id != null) {
+            SimpleBook book = bService.getSimpleBook(id);
             if (book == null) {
                 return "notFoundSimpleBook";
             }
@@ -52,6 +59,23 @@ public class SimpleBookController {
             return "invalidSimpleBook";
         }
         return "simpleBook";
+    }
+    @PreAuthorize("hasAuthority('USER')")
+    @PostMapping("/book")
+    public String createSimpleBook(@RequestParam String name, Model model) {
+        if (simpleBookNameValidator.validate(name)) {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String username = auth.getName();
+            if (bService.addBook(name, username)) {
+                return "redirect:/book?id="+name;
+            } else {
+                model.addAttribute("error", name + " is already exists");
+                return "redirect:/book?";
+            }
+        } else {
+            model.addAttribute("error", name + " is not viable");
+            return "redirect:/book?";
+        }
     }
 
 }

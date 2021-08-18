@@ -2,11 +2,13 @@ package searchiarium.ct.com.websynthsimpletext.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import searchiarium.ct.com.websynthsimpletext.entities.Role;
 import searchiarium.ct.com.websynthsimpletext.entities.SimpleBook;
 import searchiarium.ct.com.websynthsimpletext.entities.SimpleText;
 import searchiarium.ct.com.websynthsimpletext.entities.User;
 import searchiarium.ct.com.websynthsimpletext.repositories.SimpleBookRepository;
 import searchiarium.ct.com.websynthsimpletext.repositories.SimpleTextRepository;
+import searchiarium.ct.com.websynthsimpletext.repositories.UserRepository;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -21,6 +23,9 @@ public class SimpleBookService {
 
     @Autowired
     SimpleTextRepository tRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     public SimpleBook getSimpleBook(final String name) {
         return bRepository.findByShortNameEquals(name);
@@ -66,6 +71,22 @@ public class SimpleBookService {
 
     public SimpleText getSimpleText(final SimpleBook book, final User user) {
         return book.getSimpleText(user);
+    }
+
+    public boolean addBook(String name, String username) {
+        if (bRepository.findByShortNameEquals(name) == null) {
+            User user = userRepository.findByUsername(username);
+            user.addRole(Role.OWNER);
+            SimpleBook book = SimpleBook.builder()
+                    .creator(user.getTeam())
+                    .owner(user.getTeam())
+                    .shortName(name)
+                    .build();
+            bRepository.save(book);
+            return true;
+        } else {
+            return false;
+        }
     }
 
 //    public boolean updateText(final String text) {

@@ -11,6 +11,7 @@ import searchiarium.ct.com.websynthsimpletext.entities.Role;
 import javax.persistence.*;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -26,7 +27,7 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String username;
     private String password;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
     @ManyToOne(fetch = FetchType.EAGER)
     private Team team;

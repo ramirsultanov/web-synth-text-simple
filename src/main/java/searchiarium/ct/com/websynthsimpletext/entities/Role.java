@@ -14,7 +14,7 @@ import java.util.Set;
 //@NoArgsConstructor
 //@AllArgsConstructor
 //@Entity
-//@Table(name = "entity")
+//@Table(name = "role")
 public enum Role implements GrantedAuthority {
 //    @GeneratedValue
 //    @Id
