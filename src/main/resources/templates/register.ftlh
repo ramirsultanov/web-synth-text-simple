@@ -12,8 +12,8 @@
 <body>
 <div>
     <form action="/register" method="post">
-        <input type="text" placeholder="username" name="username" id="username">
-        <input type="password" placeholder="password" name="password" id="password">
+        <label for="username"></label><input type="text" placeholder="username" name="username" id="username">
+        <label for="password"></label><input type="password" placeholder="password" name="password" id="password">
         <input type="submit" value="Register">
     </form>
 </div>

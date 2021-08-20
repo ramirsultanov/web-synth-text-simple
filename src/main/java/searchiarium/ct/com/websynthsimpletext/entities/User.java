@@ -27,14 +27,14 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String username;
     private String password;
-    @OneToMany(fetch = FetchType.EAGER)
-    private Set<Role> roles;
+    @Enumerated
+    private Role role;
     @ManyToOne(fetch = FetchType.EAGER)
     private Team team;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
+        return Set.of(role);
     }
 
     @Override
@@ -55,10 +55,6 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public void addRole(final Role role) {
-        this.roles.add(role);
     }
 
 }

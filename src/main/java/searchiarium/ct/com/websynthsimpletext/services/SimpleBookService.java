@@ -6,12 +6,14 @@ import searchiarium.ct.com.websynthsimpletext.entities.Role;
 import searchiarium.ct.com.websynthsimpletext.entities.SimpleBook;
 import searchiarium.ct.com.websynthsimpletext.entities.SimpleText;
 import searchiarium.ct.com.websynthsimpletext.entities.User;
+import searchiarium.ct.com.websynthsimpletext.models.SimpleTextUpdateDto;
 import searchiarium.ct.com.websynthsimpletext.repositories.SimpleBookRepository;
 import searchiarium.ct.com.websynthsimpletext.repositories.SimpleTextRepository;
 import searchiarium.ct.com.websynthsimpletext.repositories.UserRepository;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -76,13 +78,70 @@ public class SimpleBookService {
     public boolean addBook(String name, String username) {
         if (bRepository.findByShortNameEquals(name) == null) {
             User user = userRepository.findByUsername(username);
-            user.addRole(Role.OWNER);
+            user.setRole(Role.OWNER);
             SimpleBook book = SimpleBook.builder()
                     .creator(user.getTeam())
                     .owner(user.getTeam())
                     .shortName(name)
                     .build();
             bRepository.save(book);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean addBook(String name, String ownerUsername, String[] usernames) {
+        if (bRepository.findByShortNameEquals(name) == null) {
+            User user = userRepository.findByUsername(ownerUsername);
+            user.setRole(Role.OWNER);
+            SimpleBook book = SimpleBook.builder()
+                    .creator(user.getTeam())
+                    .owner(user.getTeam())
+                    .shortName(name)
+                    .build();
+            User[] users = new User[usernames.length];
+            SimpleText[] texts = new SimpleText[usernames.length];
+            for (int i = 0; i < usernames.length; i++) {
+                users[i] = userRepository.findByUsername(usernames[i]);
+                texts[i] = SimpleText.builder()
+                        .book(book)
+                        .owner(users[i])
+                        .text("")
+                        .createdDateTime(OffsetDateTime.now())
+                        .lastEditedDateTime(OffsetDateTime.now())
+                        .number(i)
+                        .build();
+            }
+            book.setTexts(Arrays.asList(texts));
+            bRepository.save(book);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean updateText(SimpleTextUpdateDto dto, String username) {
+        User user = userRepository.findByUsername(username);
+        if (dto.bookId != null && bRepository.findById(dto.bookId).isPresent()) {
+            SimpleBook book = bRepository.findById(dto.bookId).get();
+            for (SimpleText text : book.getTexts()) {
+                if (text.getOwner() == user) {
+                    text.setText(dto.text);
+                    text.setLastEditedDateTime(OffsetDateTime.now());
+                    bRepository.save(book);
+//                    return true;
+                    break;
+                }
+            }
+//            SimpleText text = SimpleText.builder()
+//                    .book(book)
+//                    .owner(user)
+//                    .text(dto.text)
+//                    .createdDateTime(OffsetDateTime.now())
+//                    .lastEditedDateTime(OffsetDateTime.now())
+//                    .number()
+//                    .build();
             return true;
         } else {
             return false;

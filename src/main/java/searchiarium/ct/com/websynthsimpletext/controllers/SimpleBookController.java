@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import searchiarium.ct.com.websynthsimpletext.entities.SimpleBook;
 import searchiarium.ct.com.websynthsimpletext.entities.SimpleText;
 import searchiarium.ct.com.websynthsimpletext.entities.User;
+import searchiarium.ct.com.websynthsimpletext.models.SimpleTextUpdateDto;
 import searchiarium.ct.com.websynthsimpletext.services.SimpleBookService;
 import searchiarium.ct.com.websynthsimpletext.services.UserService;
 import searchiarium.ct.com.websynthsimpletext.validators.SimpleBookNameValidator;
@@ -30,7 +31,7 @@ public class SimpleBookController {
     @Autowired
     private SimpleBookNameValidator simpleBookNameValidator;
 
-    @PreAuthorize("hasAuthority('USER')") // CHECK ME
+    @PreAuthorize("hasAnyAuthority('USER', 'OWNER', 'ADMIN')") // CHECK ME
     @GetMapping("/book") // change b => &13
     public String simpleBook(@RequestParam final String id, Model model) {
         if (model.containsAttribute("error")) {
@@ -60,13 +61,48 @@ public class SimpleBookController {
         }
         return "simpleBook";
     }
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAnyAuthority('USER', 'OWNER', 'ADMIN')")
     @PostMapping("/book")
-    public String createSimpleBook(@RequestParam String name, Model model) {
+    public String simpleBook(final SimpleTextUpdateDto dto, Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        if (bService.updateText(dto, username)) {
+            return "redirect:/book?id" + dto.bookId;
+        } else {
+            model.addAttribute("error", "update was not successful");
+            return "error";
+        }
+    }
+
+    @PreAuthorize("hasAnyAuthority('USER', 'OWNER', 'ADMIN')")
+    @GetMapping("/createBook")
+    public String createSimpleBook() {
+        return "createSimpleBook";
+    }
+    @PreAuthorize("hasAnyAuthority('USER', 'OWNER', 'ADMIN')")
+    @PostMapping("/createBook")
+    public String createSimpleBook(String name, Model model) {
         if (simpleBookNameValidator.validate(name)) {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             String username = auth.getName();
             if (bService.addBook(name, username)) {
+                return "redirect:/book?id="+name;
+            } else {
+                model.addAttribute("error", name + " is already exists");
+                return "redirect:/book?";
+            }
+        } else {
+            model.addAttribute("error", name + " is not viable");
+            return "redirect:/book?";
+        }
+    }
+    @PreAuthorize("hasAnyAuthority('USER', 'OWNER', 'ADMIN')")
+    @PostMapping("/createBook")
+    public String createSimpleBook(String name, String[] usernames, Model model) {
+        if (simpleBookNameValidator.validate(name)) {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String username = auth.getName();
+            if (bService.addBook(name, username, usernames)) {
                 return "redirect:/book?id="+name;
             } else {
                 model.addAttribute("error", name + " is already exists");

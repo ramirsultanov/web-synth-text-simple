@@ -1,22 +1,22 @@
 <#import "/spring.ftl" as spring/>
 
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>Explore world</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="../static/css/index/index.css" th:href="@{/css/index/index.scss}" />
+    <title>Register</title>
     <script>
 
     </script>
 </head>
 <body>
-    <div>
-        <form action="/book" method="post">
-            <input type="text" placeholder="name" name="name" id="name">
-            <input type="submit" value="Create">
-        </form>
-    </div>
+<div>
+    <form action="/createBook" method="post">
+        <label for="name"></label><input type="text" placeholder="name" name="name" id="name">
+        <input type="text" hidden="true">
+        <input type="submit" value="Create">
+    </form>
+    <input type="checkbox" name="check" id="name" value="Add users">
+</div>
 </body>
 </html>

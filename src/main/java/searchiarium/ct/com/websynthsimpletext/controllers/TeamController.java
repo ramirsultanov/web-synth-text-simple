@@ -25,11 +25,11 @@ public class TeamController {
     }
     @PreAuthorize("hasAuthority('USER')")
     @PostMapping("/regTeam")
-    public String registerTeam(@RequestParam RegisterTeamDto registerTeamDto) {
+    public String registerTeam(RegisterTeamDto registerTeamDto) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         if (teamService.registerTeam(registerTeamDto, username)) {
-            return "time";
+            return "redirect:/request.time";
         }
         return "registerTeam";
     }
@@ -44,11 +44,11 @@ public class TeamController {
     }
     @PreAuthorize("hasAuthority('OWNER')")
     @PostMapping("/team")
-    public String team(@RequestParam String username) {
+    public String team(String username) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String initiator = auth.getName();
         teamService.addUserToTeam(username, initiator);
-        return "redirect:/team";
+        return "redirect:/team?";
     }
 
 }

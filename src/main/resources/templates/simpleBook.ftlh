@@ -6,7 +6,9 @@
     <meta charset="UTF-8">
     <title>${book.getShortName()}</title>
     <script>
-
+        function onInputChanged() {
+            return false;
+        }
     </script>
 </head>
 <body>
@@ -21,7 +23,7 @@
         </div>
         <div>
             <label>
-                <input type="text" value=${textEqual.text}>
+                <input onkeypress="onInputChanged()" type="text" value=${textEqual.text}>
             </label>
         </div>
         <div>

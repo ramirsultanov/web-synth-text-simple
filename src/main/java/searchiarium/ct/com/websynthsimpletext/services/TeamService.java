@@ -33,7 +33,7 @@ public class TeamService {
                 .owners(List.of(user))
                 .build();
         teamRepository.save(team);
-        user.addRole(Role.OWNER);
+        user.setRole(Role.OWNER);
         return true;
     }
 

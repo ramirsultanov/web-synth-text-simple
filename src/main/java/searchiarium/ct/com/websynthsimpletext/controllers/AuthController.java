@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import searchiarium.ct.com.websynthsimpletext.models.LoginDto;
 import searchiarium.ct.com.websynthsimpletext.models.RegisterDto;
@@ -23,9 +24,9 @@ public class AuthController {
         return "login";
     }
     @PostMapping("/login")
-    public String login(@RequestParam LoginDto loginDto) {
+    public String login(LoginDto loginDto) {
         if (authService.login(loginDto)) {
-            return "time";
+            return "redirect:/request.time";
         }
         return "login"; // todo
     }
@@ -35,9 +36,9 @@ public class AuthController {
         return "register";
     }
     @PostMapping("/register")
-    public String register(@RequestParam RegisterDto registerDto) {
+    public String register(RegisterDto registerDto) {
         if (authService.register(registerDto)) {
-            return "time";
+            return "redirect:/request.time";
         }
         return "register"; // todo
     }
